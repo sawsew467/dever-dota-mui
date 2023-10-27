@@ -1,30 +1,34 @@
-import * as React from "react";
+/* eslint-disable react/prop-types */
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import { Menu } from "@mui/material";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-
-const pages = ["Home", "Heroes", "Battle"];
+import { IconButton } from "@mui/material";
+// const pages = ["Home", "Heroes", "Battle"];
 
 function Header() {
-  function handleClickNavigation(page) {
-    <Link to="/" className="link-home">
-      Go Home
-    </Link>;
-  }
+  const pages = [
+    {
+      value: "home",
+      path: "/home",
+    },
+    {
+      value: "heroes",
+      path: "/heroes",
+    },
+    {
+      value: "battle",
+      path: "/battle",
+    },
+  ];
 
   return (
-    <AppBar position="static" sx={{ display: "flex" }}>
+    <AppBar position="fixed" sx={{ justifyContent: "space-between" }}>
       <Container maxWidth="100%">
         <Toolbar disableGutters>
           <AdbIcon
@@ -34,12 +38,12 @@ function Header() {
             }}
           />
           <Typography
-            variant="h6"
+            variant="h4"
             noWrap
             component="a"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
+              display: {},
               fontWeight: 500,
               color: "inherit",
               textDecoration: "none",
@@ -58,25 +62,30 @@ function Header() {
               },
             }}
           >
-            {pages.map((page, index) => (
-              <Button
-                key={index}
-                onClick={handleClickNavigation(page)}
-                sx={{
-                  my: 2,
-                  p: "10px 50px",
-                  color: "white",
-                  fontSize: "large",
-                }}
-              >
-                {page}
-              </Button>
+            {pages?.map((page, index) => (
+              <>
+                <Link to={page.path}>
+                  <Button
+                    key={index}
+                    onClick={() => {
+                      console.log(page.value.toLowerCase());
+                      // navigationPages(page.toLowerCase());
+                    }}
+                    sx={{
+                      my: 2,
+                      p: "10px 50px",
+                      color: "white",
+                      fontSize: "small",
+                    }}
+                  >
+                    {page.value}
+                  </Button>
+                </Link>
+              </>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            {/* <IconButton sx={{ p: 0, fontSize: "large" }}> */}
+          <Box sx={{ p: 0, fontSize: "large" }}>
             <Avatar alt="R" src="/static/images/avatar/2.jpg" />
-            {/* </IconButton> */}
           </Box>
         </Toolbar>
       </Container>

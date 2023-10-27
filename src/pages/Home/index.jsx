@@ -1,16 +1,19 @@
-import React from "react";
-import Header from "../../components/Header";
 import { Box, Button, CardContent, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <>
-      <Box display={"flex"} sx={{ width: "100%" }}>
+      <Box display={"flex"} sx={{ width: "100%", position: "relative" }}>
         <CardContent
           sx={{
             width: "100%",
-            height: "100%",
-            p: "200px",
+            height: "max-content",
+            position: "fixed",
+            top: "30%",
+            bottom: "1",
+
+            // p: "150px",
             display: "flex",
             justifyContent: "center",
             alignItems: "Center",
@@ -19,6 +22,7 @@ const Home = () => {
         >
           <Typography
             // overflow={"auto"}
+
             variant="button"
             component="h2"
             noWrap
@@ -27,7 +31,8 @@ const Home = () => {
               fontWeight: "normarl",
               color: "inherit",
               //   fontSize: "",
-              fontSize: "xx-large",
+              m: "0px",
+              fontSize: "small",
               textTransform: "uppercase",
             }}
           >
@@ -37,22 +42,36 @@ const Home = () => {
             // variant="h1"
             noWrap
             sx={{
+              lineHeight: "large",
               whiteSpace: "normal",
               fontWeight: "Bold",
               color: "inherit",
-              fontSize: "10rem",
+              fontSize: "8rem",
               textTransform: "uppercase",
             }}
           >
             Dota 2 mui
           </Typography>
           <Stack spacing={2} direction="row">
-            <Button size="large" variant="outlined">
-              Your heroes
-            </Button>
-            <Button size="large" variant="contained">
-              Create battle
-            </Button>
+            <Link to="/heroes">
+              <Button
+                size="large"
+                variant="outlined"
+                sx={{ p: "5px 15px", fontSize: "small" }}
+              >
+                Your heroes
+              </Button>
+            </Link>
+            <Link to="/battle">
+              {" "}
+              <Button
+                sx={{ p: "5px 15px", fontSize: "small" }}
+                size="large"
+                variant="contained"
+              >
+                Create battle
+              </Button>
+            </Link>
           </Stack>
         </CardContent>
       </Box>

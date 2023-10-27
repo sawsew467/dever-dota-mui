@@ -7,11 +7,10 @@ import Battle from "../Battle";
 function MainPage() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
+      <Route path={"/"} element={<Home />} />
+      <Route path={"/home"} element={<Home />} />
       <Route path="/heroes" element={<Heroes />} />
       <Route path="/battle" element={<Battle />} />
-
       <Route path="*" element={<NotFound></NotFound>} />
     </Routes>
   );
