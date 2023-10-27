@@ -5,7 +5,6 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import * as React from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 const P = styled(Typography)(() => ({
@@ -24,7 +23,8 @@ const Header = () => {
         height: 68.5,
         backgroundColor: "rgb(25, 118, 210)",
         margin: 0,
-        boxShadow : "0px -15px 20px 10px #000"
+        boxShadow : "0px -15px 20px 10px #000",
+        zIndex : 99
       }}
     >
       <Container
