@@ -2,10 +2,9 @@
 
 import { List, ListItemText, Paper, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { HEROES } from "../../data/hero";
 import melee from "../../asset/images/attack_type/melee.png";
 import ranged from "../../asset/images/attack_type/ranged.png";
-const EachHero = () => {
+const EachHero = ({HEROES, isLoading}) => {
   const location = useLocation();
   const nameHeroSelect = location.pathname
     .split("/")
@@ -14,7 +13,7 @@ const EachHero = () => {
     .replaceAll("%20", " ");
   return (
     <>
-      {HEROES.map((hero) => {
+      {isLoading || HEROES.map((hero) => {
         console.log();
         if (hero.localized_name === nameHeroSelect) {
           return (

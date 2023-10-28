@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -12,18 +13,47 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { HEROES } from "../../data/hero";
 import { toast } from "react-toastify";
-const Battle = () => {
+const Battle = ({ HEROES }) => {
   const [randomHero, setRandomHero] = useState(() => {
     const result = JSON.parse(localStorage.getItem("battle")) || {};
     return result;
   });
+  const [powerHero, setPowerHero] = useState([]);
   const [open, setopen] = useState(false);
   const numberHeroes = HEROES.length;
   const handleClose = () => {
     setopen(false);
     setRandomHero({});
+  };
+  const handleCompare = (hero1, hero2) => {
+    const hero1Power = Number(
+      (Number(hero1?.base_health) +
+        Number(hero1?.base_health_regen) +
+        Number(hero1?.base_mana) +
+        Number(hero1?.base_mana_regen) +
+        Number(hero1?.base_armor) +
+        Number(hero1?.base_mr) +
+        Number(hero1?.base_attack_min) +
+        Number(hero1?.base_attack_max) +
+        Number(hero1?.base_str) +
+        Number(hero1?.base_agi)) /
+        11
+    );
+    const hero2Power = Number(
+      (Number(hero2?.base_health) +
+        Number(hero2?.base_health_regen) +
+        Number(hero2?.base_mana) +
+        Number(hero2?.base_mana_regen) +
+        Number(hero2?.base_armor) +
+        Number(hero2?.base_mr) +
+        Number(hero2?.base_attack_min) +
+        Number(hero2?.base_attack_max) +
+        Number(hero2?.base_str) +
+        Number(hero2?.base_agi)) /
+        11
+    );
+    return [Math.floor(hero1Power), Math.floor(hero2Power)];
   };
   useEffect(() => {
     localStorage.setItem("battle", JSON.stringify(randomHero));
@@ -37,11 +67,9 @@ const Battle = () => {
             That was an excellent match, both heroes deserve to be honored.
           </DialogContentText>
           <Typography align="center" variant="h4">
-            {HEROES[randomHero.hero1]?.base_attack >
-            HEROES[randomHero.hero2]?.base_attack
+            {powerHero[0] > powerHero[1]
               ? "YOU WIN!!!"
-              : HEROES[randomHero.hero1]?.base_attack ===
-                HEROES[randomHero.hero2]?.base_attack
+              : powerHero[0] === powerHero[1]
               ? "YOU DRAW!!!"
               : "YOU LOSE!!!"}
           </Typography>
@@ -58,7 +86,7 @@ const Battle = () => {
                 src={`https://api.opendota.com${HEROES[randomHero.hero1]?.img}`}
               ></img>
               <Typography align="center" variant="p">
-                Acttack point: {HEROES[randomHero.hero1]?.base_attack}
+                Acttack point: {powerHero[0]}
               </Typography>
             </ListItem>
             <ListItem
@@ -73,7 +101,7 @@ const Battle = () => {
                 src={`https://api.opendota.com${HEROES[randomHero.hero2]?.img}`}
               ></img>
               <Typography align="center" variant="p">
-                Acttack point: {HEROES[randomHero.hero2]?.base_attack}
+                Acttack point: {powerHero[1]}
               </Typography>
             </ListItem>
           </List>
@@ -134,6 +162,11 @@ const Battle = () => {
           onClick={() => {
             if (randomHero.hero1 && randomHero.hero2) {
               setopen(true);
+              const compare = handleCompare(
+                HEROES[randomHero.hero1],
+                HEROES[randomHero.hero2]
+              );
+              setPowerHero(compare);
             } else {
               toast.error("Please pick your hero and your enemy!!!");
             }

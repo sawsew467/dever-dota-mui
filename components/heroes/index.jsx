@@ -12,15 +12,14 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { HEROES } from "../../data/hero.js";
-import { Route, Routes } from "react-router-dom";
-import EachHero from "../each_hero/index.jsx";
+// import { HEROES } from "../../data/hero.js";
 import { useNavigate } from "react-router-dom";
 
-const Heroes = () => {
+const Heroes = ({ isLoading, HEROES}) => {
   const navigate = useNavigate();
   const [filter, setFilter] = React.useState("All");
   const [search, setSearch] = React.useState("");
+
   const role = [
     "All",
     "Carry",
@@ -37,6 +36,7 @@ const Heroes = () => {
     "Nuker",
     "Escape",
   ];
+
   return (
     <>
       <Typography sx={{ fontWeight: 700 }} variant="h2">
@@ -121,35 +121,33 @@ const Heroes = () => {
           gap: "15px",
         }}
       >
-        {HEROES.map((heroes) => {
-          if (
-            (heroes.roles.find((e) => e === filter) || filter === "All") &&
-            heroes.localized_name
-              .toLocaleLowerCase()
-              .includes(search.toLocaleLowerCase())
-          ) {
-            return (
-              <>
-                <Card
-                  key={heroes.id}
-                  onClick={() => {
-                    navigate(`/heroes/${heroes.localized_name}`);
-                    navigate(0);
-                  }}
-                  sx={{ width: "calc((100% - 45px)/4)", cursor: "pointer" }}
-                >
-                  <img
-                    style={{ width: "100%", height: "100%" }}
-                    src={`https://api.opendota.com${heroes.img}`}
-                  ></img>
-                </Card>
-              </>
-            );
-          }
-        })}
-        <Routes>
-          <Route path="/*" element={<EachHero />} />
-        </Routes>
+        {isLoading ||
+          HEROES?.map((heroes) => {
+            if (
+              (heroes.roles.find((e) => e === filter) || filter === "All") &&
+              heroes.localized_name
+                .toLocaleLowerCase()
+                .includes(search.toLocaleLowerCase())
+            ) {
+              return (
+                <>
+                  <Card
+                    key={heroes.id}
+                    onClick={() => {
+                      navigate(`/heroes/${heroes.localized_name}`);
+                      navigate(0);
+                    }}
+                    sx={{ width: "calc((100% - 45px)/4)", cursor: "pointer" }}
+                  >
+                    <img
+                      style={{ width: "100%", height: "100%" }}
+                      src={`https://api.opendota.com${heroes.img}`}
+                    ></img>
+                  </Card>
+                </>
+              );
+            }
+          })}
       </List>
     </>
   );
