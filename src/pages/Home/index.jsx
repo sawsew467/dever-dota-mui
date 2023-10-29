@@ -12,25 +12,20 @@ const Home = () => {
             position: "fixed",
             top: "30%",
             bottom: "1",
-
-            // p: "150px",
             display: "flex",
             justifyContent: "center",
-            alignItems: "Center",
+            alignItems: "center",
             flexDirection: "column",
           }}
         >
           <Typography
-            // overflow={"auto"}
-
             variant="button"
             component="h2"
             noWrap
             sx={{
-              whiteSpace: "normal",
+              textWrap: "wrap",
               fontWeight: "normarl",
               color: "inherit",
-              //   fontSize: "",
               m: "0px",
               fontSize: "small",
               textTransform: "uppercase",
@@ -46,8 +41,9 @@ const Home = () => {
               whiteSpace: "normal",
               fontWeight: "Bold",
               color: "inherit",
-              fontSize: "8rem",
+              fontSize: "10rem",
               textTransform: "uppercase",
+              textAlign: "center",
             }}
           >
             Dota 2 mui

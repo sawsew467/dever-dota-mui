@@ -1,4 +1,4 @@
-export const HEROES = [
+const DATA_HEROES = [
   {
     id: 1,
     localized_name: "Anti-Mage",
@@ -320,3 +320,4 @@ export const HEROES = [
     base_attack: 37,
   },
 ];
+export default DATA_HEROES
