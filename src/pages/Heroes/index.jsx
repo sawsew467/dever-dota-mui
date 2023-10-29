@@ -19,6 +19,8 @@ import {
 } from "@mui/material";
 import { HEROES } from "../../data/heroes";
 import { getImageUrl } from "../../utils/image";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // const ROLE_LIST = [
 //   "All",
@@ -37,9 +39,15 @@ import { getImageUrl } from "../../utils/image";
 //   "Escape",
 // ];
 function Heroes() {
-  const handleFilter = (e) =>{
-    console.log(e.target.value);
-  }
+  const [filterRole, setFilterRole] = useState("all");
+  const handleFilter = (e) => {
+    setFilterRole(e.target.value);
+  };
+
+  const [searchfilter, setSearchFilter] = useState("");
+  const handleSearch = (e) => {
+    setSearchFilter(e.target.value.toLowerCase());
+  };
   return (
     <>
       <Header></Header>
@@ -84,6 +92,7 @@ function Heroes() {
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
                 // value={"all"}
+                defaultValue={"all"}
                 onChange={handleFilter}
                 label="role"
               >
@@ -91,19 +100,19 @@ function Heroes() {
                   <MenuItem key={role}>{role}</MenuItem>
                 ))} */}
                 <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"carry"}>Carry</MenuItem>
-                <MenuItem value={"escape"}>Escape</MenuItem>
-                <MenuItem value={"nuker"}>Nuker</MenuItem>
-                <MenuItem value={"support"}>Support</MenuItem>
-                <MenuItem value={"disabler"}>Disabler</MenuItem>
-                <MenuItem value={"pusher"}>Pusher</MenuItem>
-                <MenuItem value={"durable"}>Durable</MenuItem>
-                <MenuItem value={"initiator"}>Initiator</MenuItem>
-                <MenuItem value={"jungle"}>Jungle</MenuItem>
-                <MenuItem value={"durable"}>Durable</MenuItem>
-                <MenuItem value={"disabler"}>Disabler</MenuItem>
-                <MenuItem value={"nuker"}>Nuker</MenuItem>
-                <MenuItem value={"escape"}>Escape</MenuItem>
+                <MenuItem value={"Carry"}>Carry</MenuItem>
+                <MenuItem value={"Escape"}>Escape</MenuItem>
+                <MenuItem value={"Nuker"}>Nuker</MenuItem>
+                <MenuItem value={"Support"}>Support</MenuItem>
+                <MenuItem value={"Disabler"}>Disabler</MenuItem>
+                <MenuItem value={"Pusher"}>Pusher</MenuItem>
+                <MenuItem value={"Durable"}>Durable</MenuItem>
+                <MenuItem value={"Initiator"}>Initiator</MenuItem>
+                <MenuItem value={"Jungle"}>Jungle</MenuItem>
+                <MenuItem value={"Durable"}>Durable</MenuItem>
+                <MenuItem value={"Disabler"}>Disabler</MenuItem>
+                <MenuItem value={"Nuker"}>Nuker</MenuItem>
+                <MenuItem value={"Escape"}>Escape</MenuItem>
               </Select>
             </FormControl>
             <TextField
@@ -111,20 +120,42 @@ function Heroes() {
               label="Search..."
               type="search"
               variant="outlined"
-              // onChange={handleFilter}
+              onChange={handleSearch}
             />
           </CardContent>
         </Card>
-
-        <ImageList sx={{ width: 1200, height: 450 }} cols={4}>
-          {HEROES.map((hero, index) => (
-            <ImageListItem
+        <ImageList cols={4} gap={16}>
+          {HEROES.filter((hero) => {
+            if (searchfilter) {
+              return hero.localized_name.toLowerCase().includes(searchfilter);
+            } else {
+              if (filterRole === "all") {
+                return true;
+              } else {
+                return hero.roles.includes(filterRole);
+              }
+            }
+          }).map((hero, index) => (
+            <Link
               key={hero.img}
-              sx={{ width: "276px", height: "194px" }}
+              style={{ width: "100%", textDecoration: "none", color: "black" }}
+              to={"/herodetail"}
             >
-              <img src={getImageUrl(hero)}></img>
-              <Typography>{hero.localized_name}</Typography>
-            </ImageListItem>
+              <ImageListItem>
+                <img
+                  style={{
+                    width: "276px",
+                    height: "194px",
+                    borderRadius: "4px",
+                  }}
+                  src={getImageUrl(hero)}
+                ></img>
+                <Typography>Name: {hero.localized_name}</Typography>
+                <Typography variant="caption">
+                  Roles: {hero.roles.join()}
+                </Typography>
+              </ImageListItem>
+            </Link>
           ))}
         </ImageList>
       </Box>
