@@ -2,7 +2,7 @@ import { Box, List, ListItemText, Paper, Typography } from "@mui/material";
 import { HEROES } from "../../data/Heroes";
 import { useParams } from "react-router-dom";
 import Header from "../Header";
-
+// Quang Vu
 function HeroDetail() {
   return (
     <div>
